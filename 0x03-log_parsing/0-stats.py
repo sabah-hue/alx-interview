@@ -10,19 +10,14 @@ try:
     for line in sys.stdin:
         data = line.split()
         count += 1
-        try:
-            if len(data) >= 5 and data[-2].isdigit() and data[-1].isdigit():
-                status_code = int(data[-2])
-                if status_code in status_dict:
-                    status_dict[status_code] += 1
-        except BaseException:
-            pass
 
-        try:
-            if len(data) >= 6 and data[-1].isdigit():
-                size += int(data[-1])
-        except BaseException:
-            pass
+        if len(data) >= 5 and data[-2].isdigit() and data[-1].isdigit():
+            status_code = int(data[-2])
+            if status_code in status_dict:
+                status_dict[status_code] += 1
+
+        if len(data) >= 6 and data[-1].isdigit():
+            size += int(data[-1])
 
         if count % 10 == 0 or sys.stdin.closed:
             print(f"File size: {size}")
@@ -35,4 +30,4 @@ except KeyboardInterrupt:
     for status_code in sorted(status_dict.keys()):
         if status_dict[status_code]:
             print(f"{status_code}: {status_dict[status_code]}")
-    raise
+    raise KeyboardInterrupt
