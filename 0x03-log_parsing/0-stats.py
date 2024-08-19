@@ -3,31 +3,35 @@
 import sys
 
 
-status_dict = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+status_dict = {"200": 0, "301": 0, "400": 0, "401": 0,
+               "403": 0, "404": 0, "405": 0, "500": 0}
 size = 0
 count = 0
+c = 0
 try:
     for line in sys.stdin:
         data = line.split()
-        count += 1
+        data_invert = data[::-1]
 
-        if len(data) >= 5 and data[-2].isdigit() and data[-1].isdigit():
-            status_code = int(data[-2])
-            if status_code in status_dict:
-                status_dict[status_code] += 1
+        if len(data_invert) > 2:
+            count += 1
 
-        if len(data) >= 6 and data[-1].isdigit():
-            size += int(data[-1])
+            if count <= 10:
+                size += int(data_invert[0])
+                c = data_invert[1]
 
-        if count % 10 == 0 or sys.stdin.closed:
-            print(f"File size: {size}")
-            for status_code in sorted(status_dict.keys()):
-                if status_dict[status_code]:
-                    print(f"{status_code}: {status_dict[status_code]}")
+                if c in status_dict.keys():
+                    status_dict[c] += 1
 
-except KeyboardInterrupt:
+            if count == 10:
+                print(f"File size: {size}")
+                for k, v in sorted(status_dict.items()):
+                    if v != 0:
+                        print(f"{k}: {v}")
+                count = 0
+
+finally:
     print(f"File size: {size}")
-    for status_code in sorted(status_dict.keys()):
-        if status_dict[status_code]:
-            print(f"{status_code}: {status_dict[status_code]}")
-    raise KeyboardInterrupt
+    for k, v in sorted(status_dict.items()):
+        if v != 0:
+            print(f"{k}: {v}")
