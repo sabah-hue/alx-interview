@@ -4,9 +4,9 @@ import sys
 import random
 
 
-def back(r, n, cols, pos, neg, board):
+def back(row, n, cols, pos, neg, board):
     """ track queens solutions """
-    if r == n:
+    if row == n:
         res = []
         for l in range(len(board)):
             for k in range(len(board[l])):
@@ -16,20 +16,20 @@ def back(r, n, cols, pos, neg, board):
         return
 
     for col in range(n):
-        if col in cols or (r + col) in pos or (r - col) in neg:
+        if col in cols or (row + col) in pos or (row - col) in neg:
             continue
 
         cols.add(col)
-        pos.add(r + col)
-        neg.add(r - col)
-        board[r][col] = 1
+        pos.add(row + col)
+        neg.add(row - col)
+        board[row][col] = 1
 
-        back(r+1, n, cols, pos, neg, board)
+        back(row + 1, n, cols, pos, neg, board)
 
         cols.remove(col)
-        pos.remove(r + col)
-        neg.remove(r - col)
-        board[r][col] = 0
+        pos.remove(row + col)
+        neg.remove(row - col)
+        board[row][col] = 0
 
 
 if len(sys.argv) != 2:
@@ -47,5 +47,6 @@ if n < 4:
 colums = set()
 pos = set()
 neg = set()
+row = 0
 board = [[0] * n for i in range(n)]
-back(0, n, colums, pos, neg, board)
+back(row, n, colums, pos, neg, board)
