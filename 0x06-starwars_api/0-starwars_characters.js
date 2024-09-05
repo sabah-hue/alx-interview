@@ -2,11 +2,10 @@
 const request = require('request');
 
 const args = process.argv;
-// const b_url = 'http://swapi-api.alx-tools.com/api/';
-const bUrl = 'https://swapi-api.hbtn.io/api/';
+const bUrl = 'https://swapi-api.alx-tools.com/api/films/';
 
 if (args.length > 2) {
-  request(`${bUrl}films/${args[2]}/`, (err, _, res) => {
+  request(`${bUrl}${args[2]}/`, (err, _, res) => {
     if (err) {
       console.log(err);
     } else {
