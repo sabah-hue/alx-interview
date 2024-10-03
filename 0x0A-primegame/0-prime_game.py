@@ -38,7 +38,7 @@ def isWinner(x, nums):
 
 def multy(arr, x):
     """ Removes multiples of a prime number from arr """
-    for i in range(2, len(ls)):
+    for i in range(2, len(arr)):
         try:
             arr[i * x] = 0
         except (ValueError, IndexError):
